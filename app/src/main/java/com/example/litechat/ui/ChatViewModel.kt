@@ -334,32 +334,6 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
     }
     
     /**
-     * Test timeout handling and session recovery
-     */
-    fun testTimeoutHandling() {
-        viewModelScope.launch {
-            try {
-                Log.d("ChatViewModel", "Testing timeout handling...")
-                val settings = _uiState.value.settings
-                
-                // Reset session to ensure clean state
-                mediaPipeService.resetSession(settings)
-                Log.d("ChatViewModel", "Session reset for timeout test")
-                
-                _uiState.update { 
-                    it.copy(errorMessage = "Timeout handling test completed. Session has been reset.")
-                }
-                
-            } catch (e: Exception) {
-                Log.e("ChatViewModel", "Timeout handling test failed", e)
-                _uiState.update { 
-                    it.copy(errorMessage = "Timeout test failed: ${e.message}")
-                }
-            }
-        }
-    }
-    
-    /**
      * Build conversation history for context
      * This method collects messages from the current conversation to provide context for the LLM
      */
